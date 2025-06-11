@@ -95,7 +95,7 @@ export const blogPosts = {
   GraduationProject: {
     title: "Graduation Project: A Journey of Challenges and Growth",
     date: "Jun 10, 2025",
-    imgUrl: "/gradProject.jpg",
+    imgUrl: "/maxresdefault.jpg",
     readTime: "5 min read",
     discription:
       "In the final year of my computer science studies, I faced one of the most important milestones: the graduation project. It was a phase filled with real challenges, teamwork, and deep learning. We navigated through technical and logistical hurdles to build a fully working solution—and earned the highest mark in our class.",
@@ -118,7 +118,7 @@ export const blogPosts = {
   SpanishLearning: {
     title: "Creating 'Tarjetas de Conversación': A Spanish Practice Tool",
     date: "Jun 10, 2025",
-    imgUrl: "/spanishApp.jpg",
+    imgUrl: "/spanishapp.png",
     readTime: "4 min read",
     discription:
       "Learning a new language can be hard, especially without speaking practice. That’s why I created Tarjetas de Conversación, a free web app that helps beginners in Spanish practice simple conversation topics using random prompts. It’s a small project with a big goal: to make speaking Spanish feel easier and more fun.",

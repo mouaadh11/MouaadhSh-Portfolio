@@ -12,7 +12,7 @@ export default function MyWork() {
       <div className="flex flex-col gap-5">
         <a href="/blog/GraduationProject">
           <ElementCard
-            imgUrl="/screenshot.png"
+            imgUrl="/maxresdefault.jpg"
             title="Graduation Project: A Journey of Challenges and Growth"
             description="the graduation project. It was a phase filled with real challenges, teamwork, and deep learning."
           />

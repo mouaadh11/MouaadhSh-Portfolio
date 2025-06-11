@@ -10,10 +10,12 @@ import { Left } from "./components/left-side";
 import BlogPage from "./components/sections/blog";
 import { NotFound } from "./components/notFound";
 import { Analytics } from "@vercel/analytics/react"; // ← make sure it's correct
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
     <>
+      <Toaster />
       <Router>
         <div className="flex flex-col items-center pt-40 bg-black min-h-screen text-white">
           <Navbar />
