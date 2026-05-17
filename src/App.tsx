@@ -1,6 +1,9 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "./components/navbar";
 import Footer from "./components/footer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Section6 from "./components/sections/section6";
 import Section4 from "./components/sections/section4";
 import Section3 from "./components/sections/section3";
@@ -9,81 +12,76 @@ import { Right } from "./components/right-side";
 import { Left } from "./components/left-side";
 import BlogPage from "./components/sections/blog";
 import { NotFound } from "./components/notFound";
-import { Analytics } from "@vercel/analytics/react"; // ← make sure it's correct
-import { Toaster } from "@/components/ui/sonner";
+
+function PageShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 sm:px-6 lg:flex-row lg:gap-14 xl:gap-20">
+      <Left />
+      <main className="flex w-full min-w-0 flex-col gap-16 lg:gap-20">
+        {children}
+      </main>
+    </div>
+  );
+}
 
 function App() {
   return (
     <>
       <Toaster />
       <Router>
-        <div className="flex flex-col items-center pt-40 bg-black min-h-screen text-white">
+        <div className="flex min-h-screen flex-col items-center bg-black pt-24 text-white sm:pt-28 lg:pt-40">
           <Navbar />
           <Routes>
             <Route
               path="/"
               element={
-                <div className="max-w-6xl w-full flex flex-row gap-[100px]">
-                  <Left />
+                <PageShell>
                   <Right />
-                </div>
+                </PageShell>
               }
             />
             <Route
               path="/education"
               element={
-                <div className="max-w-6xl w-full flex flex-row gap-[100px]">
-                  <Left />
-                  <div className="flex flex-col gap-20">
-                    <Section2 />
-                    <Section6 />
-                  </div>
-                </div>
+                <PageShell>
+                  <Section2 />
+                  <Section6 />
+                </PageShell>
               }
             />
             <Route
               path="/projects"
               element={
-                <div className="max-w-6xl w-full flex flex-row gap-[100px]">
-                  <Left />
-                  <div className="flex flex-col gap-20">
-                    <Section3 />
-                    <Section6 />
-                  </div>
-                </div>
+                <PageShell>
+                  <Section3 />
+                  <Section6 />
+                </PageShell>
               }
             />
             <Route
               path="/tools"
               element={
-                <div className="max-w-6xl w-full flex flex-row gap-[100px]">
-                  <Left />
-                  <div className="flex flex-col gap-20">
-                    <Section4 />
-                    <Section6 />
-                  </div>
-                </div>
+                <PageShell>
+                  <Section4 />
+                  <Section6 />
+                </PageShell>
               }
             />
             <Route
               path="/contact"
               element={
-                <div className="max-w-6xl w-full flex flex-row gap-[100px]">
-                  <Left />
+                <PageShell>
                   <Section6 />
-                </div>
+                </PageShell>
               }
             />
             <Route
               path="/blog/:id"
               element={
-                <div className="max-w-6xl w-full flex flex-row gap-[100px]">
-                  <Left />
-                  <div className="flex flex-col gap-20">
-                    <BlogPage />
-                    <Section6 />
-                  </div>
-                </div>
+                <PageShell>
+                  <BlogPage />
+                  <Section6 />
+                </PageShell>
               }
             />
             <Route path="*" element={<NotFound />} />

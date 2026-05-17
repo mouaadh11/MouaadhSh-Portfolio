@@ -8,7 +8,7 @@ import Section6 from "./sections/section6";
 
 export function Right() {
   return (
-    <div className="flex flex-col gap-20">
+    <div className="flex w-full flex-col gap-16 lg:gap-20">
       {/* Section 1 */}
       <Section1 />
       {/* section 2 */}

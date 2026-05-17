@@ -60,10 +60,10 @@ export default function MyContactForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 min-w-[696px] mx-auto text-gray text-paragraph leading-paragraph"
+        className="mx-auto w-full space-y-8 text-base leading-7 text-gray sm:text-paragraph sm:leading-paragraph"
       >
         <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-6">
+          <div className="col-span-12 sm:col-span-6">
             <FormField
               control={form.control}
               name="name"
@@ -85,7 +85,7 @@ export default function MyContactForm() {
             />
           </div>
 
-          <div className="col-span-6">
+          <div className="col-span-12 sm:col-span-6">
             <FormField
               control={form.control}
               name="email"

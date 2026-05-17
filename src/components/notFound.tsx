@@ -1,7 +1,9 @@
 export const NotFound = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full py-50  text-orange">
-      <h1 className="text-[280px] leading-[280px] font-extrabold">404</h1>
+    <div className="flex w-full flex-col items-center justify-center px-4 py-32 text-orange sm:py-50">
+      <h1 className="text-8xl font-extrabold leading-none sm:text-[180px] lg:text-[280px] lg:leading-[280px]">
+        404
+      </h1>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function Section4() {
         <SectionTitle titlePart1={"PREMIUM"} titlePart2={"TOOLS"} />
       </div>
       {/* Tools */}
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
         <ToolCard
           imgUrl="/Arduino.png"
           title="Arduino"

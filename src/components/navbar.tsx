@@ -7,11 +7,11 @@ import {
 
 export function Navbar() {
   return (
-    <div className="flex flex-row gap-5 bg-[#ffffff08] px-4.5 py-1 rounded-2xl absolute top-8">
+    <nav className="fixed top-4 z-50 flex max-w-[calc(100vw-2rem)] flex-row gap-2 overflow-x-auto rounded-2xl bg-[#ffffff14] px-3 py-1 shadow-lg backdrop-blur sm:top-8 sm:gap-5 sm:px-4.5">
       {/* Home */}
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
-          <Link className="flex flex-col justify-center items-center w-9 h-9" to="/">
+          <Link className="flex h-9 w-9 shrink-0 flex-col items-center justify-center" to="/">
             <img
               src="/home.svg"
               alt="homeIcon"
@@ -29,7 +29,7 @@ export function Navbar() {
       {/* Education */}
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
-          <Link className="flex flex-col justify-center items-center w-9 h-9" to="/education">
+          <Link className="flex h-9 w-9 shrink-0 flex-col items-center justify-center" to="/education">
             <img
               src="/book.svg"
               alt="bookIcon"
@@ -47,7 +47,7 @@ export function Navbar() {
       {/* Projects */}
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
-          <Link className="flex flex-col justify-center items-center w-9 h-9" to="/projects">
+          <Link className="flex h-9 w-9 shrink-0 flex-col items-center justify-center" to="/projects">
             <img
               src="/folder.svg"
               alt="folderIcon"
@@ -65,7 +65,7 @@ export function Navbar() {
       {/* Tools */}
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
-          <Link className="flex flex-col justify-center items-center w-9 h-9" to="/tools">
+          <Link className="flex h-9 w-9 shrink-0 flex-col items-center justify-center" to="/tools">
             <img
               src="/tool.svg"
               alt="toolIcon"
@@ -83,7 +83,7 @@ export function Navbar() {
       {/* Contact */}
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
-          <Link  className="flex flex-col justify-center items-center w-9 h-9" to="/contact">
+          <Link  className="flex h-9 w-9 shrink-0 flex-col items-center justify-center" to="/contact">
             <img
               src="/edit.svg"
               alt="editIcon"
@@ -97,6 +97,6 @@ export function Navbar() {
           <p>Contact</p>
         </TooltipContent>
       </Tooltip>
-    </div>
+    </nav>
   );
 }

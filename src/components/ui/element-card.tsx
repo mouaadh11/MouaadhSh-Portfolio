@@ -12,13 +12,13 @@ export default function ElementCard({
   imgUrl?: string;
 }) {
   return (
-    <div className="px-4 py-4 relative  bg-white/20 hover:bg-white/40 rounded-2xl">
-      <div className="absolute right-4 top-9 ">
+    <div className="relative rounded-2xl bg-white/20 px-4 py-4 transition-colors hover:bg-white/40">
+      <div className="absolute right-4 top-5 sm:top-9">
         <img src="/arrow-up-right.svg" alt="arrowUpRightIcon" />
       </div>
-      <div className="flex flex-row gap-5 items-center">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
         {imgUrl && (
-          <div className="w-[130px] h-[135px] overflow-hidden rounded-2xl shrink-0">
+          <div className="h-48 w-full shrink-0 overflow-hidden rounded-2xl sm:h-[135px] sm:w-[130px]">
             <img
               src={imgUrl}
               alt="Project-Screenshot"
@@ -28,8 +28,8 @@ export default function ElementCard({
         )}
         <div className="flex flex-col gap-5 w-full">
           {/* Title & Description */}
-          <div className="flex flex-col gap-3.5 max-w-[480px]">
-            <h1 className="text-h3 leading-h3 font-semibold text-white">
+          <div className="max-w-[480px] pr-8 sm:pr-0 flex flex-col gap-3.5">
+            <h1 className="text-xl font-semibold leading-7 text-white sm:text-h3 sm:leading-h3">
               {title}
             </h1>
             <p className="text-small-paragraph leading-small-paragraph text-gray">
@@ -37,7 +37,7 @@ export default function ElementCard({
             </p>
           </div>
           {/* Date & Read Time */}
-          <div className="flex flex-row gap-5 justify-between text-gray">
+          <div className="flex flex-col gap-2 text-gray sm:flex-row sm:justify-between sm:gap-5">
             {date && (
               <p className="text-small-paragraph leading-small-paragraph text-gray">
                 {date}

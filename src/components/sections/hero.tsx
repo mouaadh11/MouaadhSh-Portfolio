@@ -9,7 +9,7 @@ export default function Hero() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex flex-col gap-15">
+      <div className="flex flex-col gap-12 lg:gap-15">
         {/* Title */}
         <div className="flex flex-col gap-2.5">
           <SectionTitle
@@ -17,12 +17,12 @@ export default function Hero() {
             titlePart2={"& QA Tester"}
           />
           <div>
-            <p className="text-paragraph leading-paragraph text-gray mt-6">
+            <p className="mt-6 text-base leading-7 text-gray sm:text-paragraph sm:leading-paragraph">
               <span className="font-bold text-orange">"</span>Open to QA and
               Software Development roles • Curious, motivated, and ready to grow
               <span className="font-bold text-orange">"</span>
             </p>
-            <p className="text-paragraph leading-paragraph text-gray mt-3 text-justify">
+            <p className="mt-3 text-left text-base leading-7 text-gray sm:text-paragraph sm:leading-paragraph md:text-justify">
               I'm a{" "}
               <span className="font-semibold">Computer Science graduate</span>{" "}
               with a strong interest in both{" "}
@@ -65,14 +65,14 @@ export default function Hero() {
         <div>
           <SectionTitle titlePart1={"PROUD 🌟"} titlePart2={"MOMENTS "} />
           {/* <h1 className="text-h3 leading-h3 font-bold text-white">🌟 Proud Moments</h1> */}
-          <p className="text-paragraph leading-paragraph text-gray mt-5">
+          <p className="mt-5 text-base leading-7 text-gray sm:text-paragraph sm:leading-paragraph">
             <span className="font-bold text-orange">"</span> Recognized for
             academic excellence in both high school and university
             <span className="font-bold text-orange">"</span>
           </p>
           {/* Boxes */}
-          <div className=" flex flex-row mt-3 gap-10 h-[240px]">
-            <div className="bg-orange-400 w-[300px] h-full shrink-0 rounded-2xl p-5 pt-10 flex flex-col gap-5 relative">
+          <div className="mt-3 grid gap-5 sm:grid-cols-2 lg:h-[240px] lg:gap-10">
+            <div className="relative flex min-h-[220px] flex-col gap-5 overflow-hidden rounded-2xl bg-orange-400 p-5 pt-10 sm:min-h-0 lg:w-[300px] lg:shrink-0">
               <div className="absolute rounded-2xl overflow-hidden w-[300px] top-0 left-0 z-1">
                 <Box1Vector />
                 <Box1Vector />
@@ -84,7 +84,7 @@ export default function Hero() {
               />
 
               <div className="flex flex-col justify-between items-end h-full z-10">
-                <p className="text-2xl">
+                <p className="text-xl sm:text-2xl">
                   Ranked <span className="font-bold">#1</span> in my high
                   school, 2021
                 </p>
@@ -99,7 +99,7 @@ export default function Hero() {
                 </Button>
               </div>
             </div>
-            <div className="bg-[#c5ff41] text-black w-full h-full rounded-2xl p-5 pt-10 flex flex-col gap-5 relative">
+            <div className="relative flex min-h-[220px] flex-col gap-5 overflow-hidden rounded-2xl bg-[#c5ff41] p-5 pt-10 text-black sm:min-h-0">
               <div className="absolute rounded-2xl overflow-hidden w-full h-full top-0 left-0 z-1">
                 <Box2Vector className="top-[-75px] relative" />
                 <Box2Vector className="top-[-180px] left-[-25px] rotate-180 relative" />
@@ -110,7 +110,7 @@ export default function Hero() {
                 className="w-10 h-10 shrink-0"
               />
               <div className="flex flex-col justify-between items-end h-full z-10">
-                <p className="text-2xl ">
+                <p className="text-xl sm:text-2xl">
                   Ranked <span className="font-bold">#1</span> in Computer
                   Science – Class of 2024
                 </p>
