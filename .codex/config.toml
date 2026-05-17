@@ -1,0 +1,3 @@
+[mcp_servers."resend-docs"]
+command = "npx.cmd"
+args = ["-y", "mcp-remote", "https://resend.com/docs/mcp"]

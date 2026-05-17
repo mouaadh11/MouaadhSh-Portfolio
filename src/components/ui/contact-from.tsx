@@ -23,18 +23,27 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
-  name: z.string().min(1).max(35),
-  email: z.string(),
-  Service: z.string(),
-  Message: z.string(),
+  name: z.string().trim().min(2, "Please enter your name.").max(35),
+  email: z.string().trim().email("Please enter a valid email address."),
+  service: z.string().min(1, "Please choose a service."),
+  message: z.string().trim().min(10, "Please write at least 10 characters."),
 });
 
-export default function MyContactForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-  });
+type ContactFormValues = z.infer<typeof formSchema>;
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+export default function MyContactForm() {
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      service: "",
+      message: "",
+    },
+  });
+  const isSubmitting = form.formState.isSubmitting;
+
+  async function onSubmit(values: ContactFormValues) {
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
@@ -43,16 +52,20 @@ export default function MyContactForm() {
         },
         body: JSON.stringify(values),
       });
+      const result = (await response.json().catch(() => null)) as {
+        error?: string;
+        message?: string;
+      } | null;
 
-      if (response.ok) {
-        toast("Email sent successfully!");
-        form.reset();
-      } else {
-        toast("Failed to send email.");
+      if (!response.ok) {
+        throw new Error(result?.error || result?.message || "Failed to send email.");
       }
+
+      toast.success("Email sent successfully!");
+      form.reset();
     } catch (error) {
-      console.error("Error:", error);
-      toast("Something went wrong.");
+      console.error("Contact form error:", error);
+      toast.error(error instanceof Error ? error.message : "Something went wrong.");
     }
   }
 
@@ -75,10 +88,10 @@ export default function MyContactForm() {
                       placeholder="Your Name"
                       className="bg-soft-gray"
                       type="text"
+                      autoComplete="name"
                       {...field}
                     />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -91,16 +104,16 @@ export default function MyContactForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>email</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="your@email.com"
                       className="bg-soft-gray"
                       type="email"
+                      autoComplete="email"
                       {...field}
                     />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -110,23 +123,22 @@ export default function MyContactForm() {
 
         <FormField
           control={form.control}
-          name="Service"
+          name="service"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Service</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger className="w-full bg-soft-gray">
-                    <SelectValue placeholder="Select a your service" />
+                    <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="m@example.com">QA Testing</SelectItem>
-                  <SelectItem value="m@google.com">Development</SelectItem>
-                  <SelectItem value="m@support.com">Other</SelectItem>
+                  <SelectItem value="QA Testing">QA Testing</SelectItem>
+                  <SelectItem value="Development">Development</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
                 </SelectContent>
               </Select>
-
               <FormMessage />
             </FormItem>
           )}
@@ -134,24 +146,24 @@ export default function MyContactForm() {
 
         <FormField
           control={form.control}
-          name="Message"
+          name="message"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Message</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Message"
-                  className="bg-soft-gray"
+                  className="min-h-32 bg-soft-gray"
                   {...field}
                 />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full bg-orange mb-4">
-          Submit
+
+        <Button type="submit" disabled={isSubmitting} className="w-full bg-orange mb-4">
+          {isSubmitting ? "Sending..." : "Submit"}
         </Button>
       </form>
     </Form>
