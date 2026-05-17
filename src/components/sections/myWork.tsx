@@ -1,30 +1,36 @@
+import { seedProjects } from "@/data/seedPortfolioData";
+import { usePortfolioCollection } from "@/hooks/usePortfolioCollection";
 import ElementCard from "../ui/element-card";
 import SectionTitle from "../ui/section-title";
 
 export default function MyWork() {
+  const { items, isLoading } = usePortfolioCollection("projects", seedProjects);
+
   return (
-    <div className=" flex flex-col gap-5">
-      {/* Title */}
-      <div>
-        <SectionTitle titlePart1={"MY 👨🏻‍💻"} titlePart2={"WORK"} />
-      </div>
-      {/* Projects */}
-      <div className="flex flex-col gap-5">
-        <a href="/blog/GraduationProject">
-          <ElementCard
-            imgUrl="/maxresdefault.jpg"
-            title="Graduation Project: A Journey of Challenges and Growth"
-            description="the graduation project. It was a phase filled with real challenges, teamwork, and deep learning."
-          />
-        </a>
-        <a href="/blog/SpanishLearning">
-          <ElementCard
-            imgUrl="/screenshot.png"
-            title="A Spanish Practice Tool"
-            description="a free web app that helps beginners in Spanish practice simple conversation topics using random prompts. It’s a small project with a big goal: to make speaking Spanish feel easier and more fun."
-          />
-        </a>
-      </div>
+    <div className="flex flex-col gap-5">
+      <SectionTitle titlePart1="MY WORK" titlePart2="PROJECTS" />
+
+      {isLoading ? (
+        <p className="text-small-paragraph leading-small-paragraph text-gray">
+          Loading projects...
+        </p>
+      ) : items.length === 0 ? (
+        <p className="text-small-paragraph leading-small-paragraph text-gray">
+          Projects will be added soon.
+        </p>
+      ) : (
+        <div className="flex flex-col gap-5">
+          {items.map((project) => (
+            <a key={project.id} href={project.link || project.githubUrl || "#"}>
+              <ElementCard
+                imgUrl={project.imageUrl}
+                title={project.title}
+                description={project.description}
+              />
+            </a>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

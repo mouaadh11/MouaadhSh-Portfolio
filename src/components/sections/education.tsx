@@ -1,30 +1,30 @@
-import { seedExperience } from "@/data/seedPortfolioData";
+import { seedEducation } from "@/data/seedPortfolioData";
 import { usePortfolioCollection } from "@/hooks/usePortfolioCollection";
 import ElementCard from "../ui/element-card";
 import SectionTitle from "../ui/section-title";
 
-export default function Section3() {
-  const { items, isLoading } = usePortfolioCollection("experience", seedExperience);
+export default function EducationSection() {
+  const { items, isLoading } = usePortfolioCollection("education", seedEducation);
 
   return (
     <div className="flex flex-col gap-5">
-      <SectionTitle titlePart1="MY" titlePart2="JOURNEY" />
+      <SectionTitle titlePart1="MY STUDIES" titlePart2="EDUCATION" />
 
       {isLoading ? (
         <p className="text-small-paragraph leading-small-paragraph text-gray">
-          Loading journey...
+          Loading education...
         </p>
       ) : items.length === 0 ? (
         <p className="text-small-paragraph leading-small-paragraph text-gray">
-          Journey entries will be added soon.
+          Education content will be added soon.
         </p>
       ) : (
         <div className="flex flex-col gap-5">
           {items.map((item) => (
             <ElementCard
               key={item.id}
-              title={item.title}
-              description={`${item.description}${item.company ? ` - ${item.company}` : ""}`}
+              title={`${item.title} - ${item.institution}`}
+              description={item.description}
               date={[item.startDate, item.endDate].filter(Boolean).join(" - ")}
             />
           ))}

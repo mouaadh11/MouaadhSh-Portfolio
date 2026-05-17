@@ -6,12 +6,16 @@ import { Navbar } from "./components/navbar";
 import Footer from "./components/footer";
 import Section6 from "./components/sections/section6";
 import Section4 from "./components/sections/section4";
-import Section3 from "./components/sections/section3";
 import Section2 from "./components/sections/myWork";
+import EducationSection from "./components/sections/education";
 import { Right } from "./components/right-side";
 import { Left } from "./components/left-side";
 import BlogPage from "./components/sections/blog";
 import { NotFound } from "./components/notFound";
+import { AuthProvider } from "./contexts/AuthContext";
+import AdminLogin from "./components/admin/AdminLogin";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -24,71 +28,107 @@ function PageShell({ children }: { children: ReactNode }) {
   );
 }
 
+function PublicChrome({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex min-h-screen flex-col items-center bg-black pt-24 text-white sm:pt-28 lg:pt-40">
+      <Navbar />
+      {children}
+      <Footer />
+    </div>
+  );
+}
+
 function App() {
   return (
     <>
       <Toaster />
-      <Router>
-        <div className="flex min-h-screen flex-col items-center bg-black pt-24 text-white sm:pt-28 lg:pt-40">
-          <Navbar />
+      <AuthProvider>
+        <Router>
           <Routes>
             <Route
               path="/"
               element={
-                <PageShell>
-                  <Right />
-                </PageShell>
+                <PublicChrome>
+                  <PageShell>
+                    <Right />
+                  </PageShell>
+                </PublicChrome>
               }
             />
             <Route
               path="/education"
               element={
-                <PageShell>
-                  <Section2 />
-                  <Section6 />
-                </PageShell>
+                <PublicChrome>
+                  <PageShell>
+                    <EducationSection />
+                    <Section6 />
+                  </PageShell>
+                </PublicChrome>
               }
             />
             <Route
               path="/projects"
               element={
-                <PageShell>
-                  <Section3 />
-                  <Section6 />
-                </PageShell>
+                <PublicChrome>
+                  <PageShell>
+                    <Section2 />
+                    <Section6 />
+                  </PageShell>
+                </PublicChrome>
               }
             />
             <Route
               path="/tools"
               element={
-                <PageShell>
-                  <Section4 />
-                  <Section6 />
-                </PageShell>
+                <PublicChrome>
+                  <PageShell>
+                    <Section4 />
+                    <Section6 />
+                  </PageShell>
+                </PublicChrome>
               }
             />
             <Route
               path="/contact"
               element={
-                <PageShell>
-                  <Section6 />
-                </PageShell>
+                <PublicChrome>
+                  <PageShell>
+                    <Section6 />
+                  </PageShell>
+                </PublicChrome>
               }
             />
             <Route
               path="/blog/:id"
               element={
-                <PageShell>
-                  <BlogPage />
-                  <Section6 />
-                </PageShell>
+                <PublicChrome>
+                  <PageShell>
+                    <BlogPage />
+                    <Section6 />
+                  </PageShell>
+                </PublicChrome>
               }
             />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <PublicChrome>
+                  <NotFound />
+                </PublicChrome>
+              }
+            />
           </Routes>
-          <Footer />
-        </div>
-      </Router>
+        </Router>
+      </AuthProvider>
       <Analytics />
     </>
   );
