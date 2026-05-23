@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { seedProfile } from "@/data/seedPortfolioData";
+import { emptyProfile } from "@/lib/portfolioDefaults";
 import { getProfile, updateProfile } from "@/services/portfolioService";
 import type { Profile, SocialLink } from "@/types/portfolio";
 
@@ -26,8 +26,8 @@ function textToSocialLinks(value: string): SocialLink[] {
 }
 
 export default function AdminProfileForm() {
-  const [profile, setProfile] = useState<Profile>(seedProfile);
-  const [socialLinks, setSocialLinks] = useState(socialLinksToText(seedProfile.socialLinks));
+  const [profile, setProfile] = useState<Profile>(emptyProfile);
+  const [socialLinks, setSocialLinks] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {

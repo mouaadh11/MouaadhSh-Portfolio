@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { seedAchievements } from "@/data/seedPortfolioData";
 import { usePortfolioCollection } from "@/hooks/usePortfolioCollection";
 import { useProfile } from "@/hooks/useProfile";
 import { Button } from "../ui/button";
@@ -8,13 +7,22 @@ import ArrowRight from "../vector/arrow-right";
 import Box1Vector from "../vector/box1-vector";
 import Box2Vector from "../vector/box2-vector";
 
+function renderTitleWithOrangeDelimiters(title: string) {
+  return title.split(/(\|)/g).map((part, index) =>
+    part === "|" ? (
+      <span key={`${part}-${index}`} className="font-bold text-orange">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
 export default function Hero() {
   const navigate = useNavigate();
   const { profile } = useProfile();
-  const { items: achievements, isLoading } = usePortfolioCollection(
-    "achievements",
-    seedAchievements,
-  );
+  const { items: achievements, isLoading } = usePortfolioCollection("achievements");
   const firstAchievement = achievements[0];
   const secondAchievement = achievements[1];
 
@@ -25,7 +33,7 @@ export default function Hero() {
         <div>
           <p className="mt-6 text-base leading-7 text-gray sm:text-paragraph sm:leading-paragraph">
             <span className="font-bold text-orange">"</span>
-            {profile.title}
+            {renderTitleWithOrangeDelimiters(profile.title)}
             <span className="font-bold text-orange">"</span>
           </p>
           <p className="mt-3 text-left text-base leading-7 text-gray sm:text-paragraph sm:leading-paragraph md:text-justify">

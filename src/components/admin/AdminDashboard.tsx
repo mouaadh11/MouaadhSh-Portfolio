@@ -19,6 +19,7 @@ const tabs = [
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("profile");
   const { user, logout } = useAuth();
+  const profilePictureUrl = user?.photoURL || "/myfoto.png";
   const activeConfig = adminCollectionConfigs.find(
     (config) => config.collectionName === activeTab,
   );
@@ -32,19 +33,38 @@ export default function AdminDashboard() {
     <main className="min-h-screen w-full bg-black px-4 py-6 text-white sm:px-6 lg:px-8">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
         <header className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/10 p-5 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-orange">Admin</p>
-            <h1 className="mt-2 text-3xl font-black">Portfolio CMS</h1>
-            <p className="mt-2 text-sm text-gray">{user?.email}</p>
+          <div className="flex items-center gap-4">
+            <div className="shrink-0 overflow-hidden rounded-full border border-white/15 bg-white/10 p-1">
+              <img
+                src={profilePictureUrl}
+                alt="Admin profile picture"
+                className="h-16 w-16 rounded-full object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-orange">
+                Admin
+              </p>
+              <h1 className="mt-2 text-3xl font-black">Portfolio CMS</h1>
+              <p className="mt-2 text-sm text-gray">{user?.email}</p>
+            </div>
           </div>
           <div className="flex flex-wrap gap-2 text-gray ">
-            <Button asChild variant="outline">
+            <Button
+              asChild
+              variant="outline"
+              className="border border-orange bg-orange text-white hover:bg-white/10 hover:text-white"
+            >
               <Link to="/">
                 <ArrowLeft />
                 Back to portfolio
               </Link>
             </Button>
-            <Button type="button" variant="outline" onClick={() => void handleLogout()}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => void handleLogout()}
+            >
               <LogOut />
               Logout
             </Button>

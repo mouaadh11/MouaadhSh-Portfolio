@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { seedProfile } from "@/data/seedPortfolioData";
 import { isFirebaseConfigured } from "@/lib/firebase";
+import { emptyProfile } from "@/lib/portfolioDefaults";
 import { getProfile } from "@/services/portfolioService";
 import type { Profile } from "@/types/portfolio";
 
 export function useProfile() {
-  const [profile, setProfile] = useState<Profile>(seedProfile);
+  const [profile, setProfile] = useState<Profile>(emptyProfile);
   const [isLoading, setIsLoading] = useState(isFirebaseConfigured);
 
   useEffect(() => {

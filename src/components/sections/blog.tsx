@@ -1,7 +1,6 @@
 import { Navigate, useParams } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import BlogModel from "./blog-model";
-import { seedBlogs } from "@/data/seedPortfolioData";
 import { isFirebaseConfigured } from "@/lib/firebase";
 import { getBlogBySlug } from "@/services/portfolioService";
 import type { Blog, TimestampValue } from "@/types/portfolio";
@@ -63,11 +62,7 @@ function markdownToPortions(content: string) {
 
 const BlogPage = () => {
   const { id } = useParams<{ id: string }>();
-  const fallbackBlog = useMemo(
-    () => seedBlogs.find((blog) => blog.slug === id || blog.id === id),
-    [id],
-  );
-  const [blog, setBlog] = useState<Blog | null | undefined>(fallbackBlog);
+  const [blog, setBlog] = useState<Blog | null>(null);
   const [isLoading, setIsLoading] = useState(Boolean(isFirebaseConfigured && id));
 
   useEffect(() => {
@@ -75,6 +70,8 @@ const BlogPage = () => {
 
     async function loadBlog() {
       if (!id || !isFirebaseConfigured) {
+        setBlog(null);
+        setIsLoading(false);
         return;
       }
 
@@ -83,11 +80,11 @@ const BlogPage = () => {
       try {
         const firestoreBlog = await getBlogBySlug(id);
         if (isMounted) {
-          setBlog(firestoreBlog ?? fallbackBlog ?? null);
+          setBlog(firestoreBlog);
         }
       } catch {
         if (isMounted) {
-          setBlog(fallbackBlog ?? null);
+          setBlog(null);
         }
       } finally {
         if (isMounted) {
@@ -101,7 +98,7 @@ const BlogPage = () => {
     return () => {
       isMounted = false;
     };
-  }, [fallbackBlog, id]);
+  }, [id]);
 
   if (isLoading) {
     return <p className="text-small-paragraph leading-small-paragraph text-gray">Loading blog...</p>;

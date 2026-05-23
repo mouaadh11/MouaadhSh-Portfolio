@@ -3,9 +3,11 @@ import { isFirebaseConfigured } from "@/lib/firebase";
 import { getCollectionItems } from "@/services/portfolioService";
 import type { PortfolioCollection, PortfolioCollectionMap } from "@/types/portfolio";
 
+const emptyCollectionItems: never[] = [];
+
 export function usePortfolioCollection<K extends PortfolioCollection>(
   collectionName: K,
-  fallbackItems: PortfolioCollectionMap[K][],
+  fallbackItems: PortfolioCollectionMap[K][] = emptyCollectionItems,
 ) {
   const [items, setItems] = useState<PortfolioCollectionMap[K][]>(fallbackItems);
   const [isLoading, setIsLoading] = useState(isFirebaseConfigured);

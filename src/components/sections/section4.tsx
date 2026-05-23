@@ -1,10 +1,9 @@
-import { seedTools } from "@/data/seedPortfolioData";
 import { usePortfolioCollection } from "@/hooks/usePortfolioCollection";
 import SectionTitle from "../ui/section-title";
 import ToolCard from "../ui/tool-card";
 
 export default function Section4() {
-  const { items, isLoading } = usePortfolioCollection("tools", seedTools);
+  const { items, isLoading } = usePortfolioCollection("tools");
 
   return (
     <div className="flex flex-col gap-5">

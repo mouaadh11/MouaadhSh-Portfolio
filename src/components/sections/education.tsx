@@ -1,10 +1,9 @@
-import { seedEducation } from "@/data/seedPortfolioData";
 import { usePortfolioCollection } from "@/hooks/usePortfolioCollection";
 import ElementCard from "../ui/element-card";
 import SectionTitle from "../ui/section-title";
 
 export default function EducationSection() {
-  const { items, isLoading } = usePortfolioCollection("education", seedEducation);
+  const { items, isLoading } = usePortfolioCollection("education");
 
   return (
     <div className="flex flex-col gap-5">
