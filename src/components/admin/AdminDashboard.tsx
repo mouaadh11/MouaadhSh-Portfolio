@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { LogOut, RefreshCw } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, LogOut } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { seedPortfolioData } from "@/data/seedPortfolioData";
 import { useAuth } from "@/hooks/useAuth";
-import { seedDefaultPortfolioData } from "@/services/portfolioService";
 import AdminCollectionManager from "./AdminCollectionManager";
 import AdminProfileForm from "./AdminProfileForm";
 import { adminCollectionConfigs } from "./adminConfig";
@@ -19,29 +18,10 @@ const tabs = [
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("profile");
-  const [isSeeding, setIsSeeding] = useState(false);
   const { user, logout } = useAuth();
   const activeConfig = adminCollectionConfigs.find(
     (config) => config.collectionName === activeTab,
   );
-
-  async function handleSeed() {
-    if (!window.confirm("Seed Firestore with the default portfolio content? Existing matching IDs will be overwritten.")) {
-      return;
-    }
-
-    setIsSeeding(true);
-
-    try {
-      await seedDefaultPortfolioData(seedPortfolioData);
-      toast.success("Default content seeded.");
-      window.location.reload();
-    } catch (caughtError) {
-      toast.error(caughtError instanceof Error ? caughtError.message : "Unable to seed content.");
-    } finally {
-      setIsSeeding(false);
-    }
-  }
 
   async function handleLogout() {
     await logout();
@@ -58,14 +38,11 @@ export default function AdminDashboard() {
             <p className="mt-2 text-sm text-gray">{user?.email}</p>
           </div>
           <div className="flex flex-wrap gap-2 text-gray ">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => void handleSeed()}
-              disabled={isSeeding}
-            >
-              <RefreshCw />
-              {isSeeding ? "Seeding..." : "Seed default content"}
+            <Button asChild variant="outline">
+              <Link to="/">
+                <ArrowLeft />
+                Back to portfolio
+              </Link>
             </Button>
             <Button type="button" variant="outline" onClick={() => void handleLogout()}>
               <LogOut />
