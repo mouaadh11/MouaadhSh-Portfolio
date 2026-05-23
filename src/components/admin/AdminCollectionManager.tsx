@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
+import { Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -291,7 +292,13 @@ export default function AdminCollectionManager({
                     <p className="mt-1 text-sm text-gray">{item.id}</p>
                   </div>
                   <div className="flex gap-2">
-                    <Button type="button" variant="outline" onClick={() => startEditing(item)}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => startEditing(item)}
+                      className="border-orange/50 bg-orange text-black hover:border-orange hover:bg-orange/90 hover:text-black"
+                    >
+                      <Pencil />
                       Edit
                     </Button>
                     <Button type="button" variant="destructive" onClick={() => void handleDelete(item)}>

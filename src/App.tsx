@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import type { ReactNode } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect, type ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "./components/navbar";
@@ -38,12 +38,23 @@ function PublicChrome({ children }: { children: ReactNode }) {
   );
 }
 
+function ScrollToTop() {
+  const { pathname, search } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ left: 0, top: 0, behavior: "auto" });
+  }, [pathname, search]);
+
+  return null;
+}
+
 function App() {
   return (
     <>
       <Toaster />
       <AuthProvider>
         <Router>
+          <ScrollToTop />
           <Routes>
             <Route
               path="/"
