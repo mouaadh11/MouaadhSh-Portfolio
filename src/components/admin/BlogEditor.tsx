@@ -5,7 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import slugify from "@/lib/slugify";
-import { getBlogBySlug, createBlog, updateBlog } from "@/services/portfolioService";
+import {
+  getBlogBySlug,
+  createBlog,
+  updateBlog,
+} from "@/services/portfolioService";
 
 export default function BlogEditor({
   initialSlug,
@@ -51,7 +55,9 @@ export default function BlogEditor({
           }
         }
       } catch (err) {
-        toast.error(err instanceof Error ? err.message : "Unable to load blog.");
+        toast.error(
+          err instanceof Error ? err.message : "Unable to load blog.",
+        );
       } finally {
         // load finished
       }
@@ -98,7 +104,10 @@ export default function BlogEditor({
         slug: uniqueSlug,
         description,
         imageUrl,
-        tags: String(tags || "").split(",").map((t) => t.trim()).filter(Boolean),
+        tags: String(tags || "")
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
         content,
         published,
       } as Record<string, unknown>;
@@ -124,10 +133,19 @@ export default function BlogEditor({
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-auto bg-black/60 p-6">
       <div className="w-full max-w-3xl rounded-2xl bg-black p-6 text-white shadow-lg">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-black">{blogId ? "Edit Blog" : "Create Blog"}</h2>
+          <h2 className="text-xl font-black">
+            {blogId ? "Edit Blog" : "Create Blog"}
+          </h2>
           <div className="flex gap-2">
-            <Button type="button" variant="ghost" onClick={onClose}>Close</Button>
-            <Button type="button" onClick={handleSave} disabled={isSaving} className="bg-orange text-black">
+            <Button type="button" variant="ghost" onClick={onClose}>
+              Close
+            </Button>
+            <Button
+              type="button"
+              onClick={handleSave}
+              disabled={isSaving}
+              className="border border-orange bg-orange text-white hover:bg-white/10 hover:text-white"
+            >
               {isSaving ? "Saving..." : blogId ? "Save Blog" : "Create Blog"}
             </Button>
           </div>
@@ -142,17 +160,25 @@ export default function BlogEditor({
           <div className="grid gap-2">
             <Label>Slug</Label>
             <Input value={slug} onChange={(e) => setSlug(e.target.value)} />
-            <p className="text-sm text-gray">Slug will be used in /blog/&lt;slug&gt; URL.</p>
+            <p className="text-sm text-gray">
+              Slug will be used in /blog/&lt;slug&gt; URL.
+            </p>
           </div>
 
           <div className="grid gap-2">
             <Label>Description</Label>
-            <Textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+            <Textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
 
           <div className="grid gap-2">
             <Label>Image URL</Label>
-            <Input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+            <Input
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+            />
           </div>
 
           <div className="grid gap-2">
@@ -162,11 +188,21 @@ export default function BlogEditor({
 
           <div className="grid gap-2">
             <Label>Content (Markdown)</Label>
-            <Textarea value={content} onChange={(e) => setContent(e.target.value)} className="min-h-48" />
+            <Textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="min-h-48"
+            />
           </div>
 
           <div className="flex items-center gap-3">
-            <input id="published" type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} className="h-4 w-4 accent-orange" />
+            <input
+              id="published"
+              type="checkbox"
+              checked={published}
+              onChange={(e) => setPublished(e.target.checked)}
+              className="h-4 w-4 accent-orange"
+            />
             <Label htmlFor="published">Published</Label>
           </div>
         </div>
