@@ -95,20 +95,5 @@ export const adminCollectionConfigs: AdminCollectionConfig[] = [
       { name: "order", label: "Order", type: "number", required: true },
     ],
   },
-  {
-    collectionName: "blogs",
-    label: "Blogs",
-    description: "Markdown-style blog posts loaded by slug.",
-    titleField: "title",
-    fields: [
-      { name: "title", label: "Title", type: "text", required: true },
-      { name: "slug", label: "Slug", type: "text", required: true },
-      { name: "description", label: "Description", type: "textarea", required: true },
-      { name: "imageUrl", label: "Image URL", type: "text" },
-      { name: "tags", label: "Tags", type: "tags" },
-      { name: "published", label: "Published", type: "checkbox" },
-      { name: "content", label: "Content", type: "textarea", required: true },
-      { name: "order", label: "Order", type: "number", required: true },
-    ],
-  },
+  // Blogs are now edited from each collection item's editor and are not shown as a standalone collection.
 ];

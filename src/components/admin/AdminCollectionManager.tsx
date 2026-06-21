@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import BlogEditor from "./BlogEditor";
+import slugify from "@/lib/slugify";
 import {
   createPortfolioItem,
   deleteItem,
@@ -95,6 +97,8 @@ export default function AdminCollectionManager({
   const [form, setForm] = useState<FormState>(() => createEmptyForm(config.fields, 1));
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isBlogEditorOpen, setIsBlogEditorOpen] = useState(false);
+  const [blogEditorInitialSlug, setBlogEditorInitialSlug] = useState("");
 
   const nextOrder = useMemo(
     () => Math.max(0, ...items.map((item) => Number(item.order) || 0)) + 1,
@@ -209,6 +213,33 @@ export default function AdminCollectionManager({
     setForm(itemToForm(item, config.fields));
   }
 
+  function openBlogEditorForCurrentItem() {
+    if (!editingItem) return;
+
+    const currentSlug = String((form as Record<string, unknown>)["blogSlug"] ?? "");
+    const titleValue = String((form as Record<string, unknown>)[config.titleField] ?? "");
+    const initial = currentSlug || slugify(titleValue || "");
+
+    setBlogEditorInitialSlug(initial);
+    setIsBlogEditorOpen(true);
+  }
+
+  async function handleBlogSaved(newSlug: string) {
+    if (!editingItem) return;
+
+    try {
+      await updatePortfolioItem(config.collectionName, editingItem.id, { blogSlug: newSlug });
+      toast.success("Blog linked to item.");
+      // refresh items and update form
+      await loadItems();
+      setForm(itemToForm({ ...(editingItem as AdminItem), blogSlug: newSlug }, config.fields));
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Unable to link blog.");
+    } finally {
+      setIsBlogEditorOpen(false);
+    }
+  }
+
   function renderField(field: AdminField) {
     const value = form[field.name];
 
@@ -319,15 +350,8 @@ export default function AdminCollectionManager({
         <div className="flex items-center justify-between gap-3">
           <h3 className="text-xl font-black">{editingItem ? "Edit item" : "Create item"}</h3>
           {editingItem && (
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => {
-                setEditingItem(null);
-                setForm(createEmptyForm(config.fields, nextOrder));
-              }}
-            >
-              Cancel
+            <Button type="button" variant="outline" onClick={openBlogEditorForCurrentItem} className="bg-orange text-black hover:bg-orange/90">
+              Edit Blog
             </Button>
           )}
         </div>
@@ -340,6 +364,13 @@ export default function AdminCollectionManager({
           {isSaving ? "Saving..." : editingItem ? "Save changes" : "Create"}
         </Button>
       </form>
+      {isBlogEditorOpen && (
+        <BlogEditor
+          initialSlug={blogEditorInitialSlug}
+          onClose={() => setIsBlogEditorOpen(false)}
+          onSaved={(slug) => void handleBlogSaved(slug)}
+        />
+      )}
     </section>
   );
 }

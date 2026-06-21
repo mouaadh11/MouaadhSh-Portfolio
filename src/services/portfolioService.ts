@@ -130,6 +130,26 @@ export async function getBlogBySlug(slug: string, includeDrafts = false): Promis
   return blogDoc ? withId<Blog>(blogDoc.data(), blogDoc.id) : null;
 }
 
+
+export async function createBlog(payload: Record<string, unknown>): Promise<string> {
+  const firestore = requireDb();
+  const documentRef = await addDoc(collection(firestore, "blogs"), {
+    ...payload,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+
+  return documentRef.id;
+}
+
+export async function updateBlog(id: string, payload: Record<string, unknown>): Promise<void> {
+  const firestore = requireDb();
+  await updateDoc(doc(firestore, "blogs", id), {
+    ...payload,
+    updatedAt: serverTimestamp(),
+  });
+}
+
 export async function getProfile(): Promise<Profile | null> {
   const firestore = requireDb();
   const snapshot = await getDoc(doc(firestore, "profile", "main"));
