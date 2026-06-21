@@ -1,7 +1,7 @@
 import ElementCard from "../ui/element-card";
 import SectionTitle from "../ui/section-title";
 
-export default function Section5() {
+export default function DesignThoughtsSection() {
   return (
     <div className=" flex flex-col gap-5">
       {/* Title */}

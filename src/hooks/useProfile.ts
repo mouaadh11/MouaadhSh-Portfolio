@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
-import { isFirebaseConfigured } from "@/lib/firebase";
-import { emptyProfile } from "@/lib/portfolioDefaults";
 import { getProfile } from "@/services/portfolioService";
+import { emptyProfile } from "@/lib/portfolioDefaults";
 import type { Profile } from "@/types/portfolio";
 
 export function useProfile() {
   const [profile, setProfile] = useState<Profile>(emptyProfile);
-  const [isLoading, setIsLoading] = useState(isFirebaseConfigured);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
 
     async function loadProfile() {
-      if (!isFirebaseConfigured) {
-        return;
-      }
-
       try {
         const firestoreProfile = await getProfile();
         if (isMounted && firestoreProfile) {

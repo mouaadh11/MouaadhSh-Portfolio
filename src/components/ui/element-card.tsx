@@ -1,18 +1,36 @@
+import { useNavigate } from "react-router-dom";
+
 export default function ElementCard({
   title,
   description,
   date,
   readTime,
   imgUrl,
+  blogSlug,
 }: {
   title: string;
   description: string;
   date?: string;
   readTime?: string;
   imgUrl?: string;
+  blogSlug?: string;
 }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (blogSlug?.trim()) {
+      navigate(`/blog/${blogSlug.trim()}`);
+    }
+  };
+
   return (
-    <div className="relative rounded-2xl bg-white/20 px-4 py-4 transition-colors hover:bg-white/40">
+    <div
+      className="relative rounded-2xl bg-white/20 px-4 py-4 transition-colors hover:bg-white/40 cursor-pointer"
+      onClick={handleClick}
+      role={blogSlug ? "button" : "article"}
+      tabIndex={blogSlug ? 0 : undefined}
+      onKeyDown={blogSlug ? (e) => e.key === "Enter" && handleClick() : undefined}
+    >
       <div className="absolute right-4 top-5 sm:top-9">
         <img src="/arrow-up-right.svg" alt="arrowUpRightIcon" />
       </div>

@@ -2,7 +2,7 @@ import { usePortfolioCollection } from "@/hooks/usePortfolioCollection";
 import SectionTitle from "../ui/section-title";
 import ToolCard from "../ui/tool-card";
 
-export default function Section4() {
+export default function ToolsSection() {
   const { items, isLoading } = usePortfolioCollection("tools");
 
   return (

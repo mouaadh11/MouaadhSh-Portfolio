@@ -1,5 +1,5 @@
-import { Left } from "./left-side";
-import { Right } from "./right-side";
+import { Left } from "./LeftSide";
+import { Right } from "./RightSide";
 
 export default function Index() {
   return (

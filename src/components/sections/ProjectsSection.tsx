@@ -2,7 +2,7 @@ import { usePortfolioCollection } from "@/hooks/usePortfolioCollection";
 import ElementCard from "../ui/element-card";
 import SectionTitle from "../ui/section-title";
 
-export default function MyWork() {
+export default function ProjectsSection() {
   const { items, isLoading } = usePortfolioCollection("projects");
 
   return (
@@ -19,15 +19,29 @@ export default function MyWork() {
         </p>
       ) : (
         <div className="flex flex-col gap-5">
-          {items.map((project) => (
-            <a key={project.id} href={project.link || project.githubUrl || "#"}>
+          {items.map((project) => {
+            const blogSlug = project.blogSlug;
+            const element = (
               <ElementCard
+                key={project.id}
                 imgUrl={project.imageUrl}
                 title={project.title}
                 description={project.description}
+                blogSlug={blogSlug}
               />
-            </a>
-          ))}
+            );
+
+            // If there's an external link and no blog slug, wrap in anchor
+            if (!blogSlug && (project.link || project.githubUrl)) {
+              return (
+                <a key={project.id} href={project.link || project.githubUrl || "#"}>
+                  {element}
+                </a>
+              );
+            }
+
+            return element;
+          })}
         </div>
       )}
     </div>

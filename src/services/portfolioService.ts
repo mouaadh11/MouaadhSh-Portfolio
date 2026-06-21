@@ -22,9 +22,18 @@ import type {
   Profile,
 } from "@/types/portfolio";
 
+class DbNotConfiguredError extends Error {
+  code = "NO_DB";
+
+  constructor(message = "Firebase is not configured. Add Vite Firebase environment variables.") {
+    super(message);
+    this.name = "DbNotConfiguredError";
+  }
+}
+
 function requireDb() {
   if (!db) {
-    throw new Error("Firebase is not configured. Add Vite Firebase environment variables.");
+    throw new DbNotConfiguredError();
   }
 
   return db;

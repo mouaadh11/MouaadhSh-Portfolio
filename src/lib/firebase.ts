@@ -14,12 +14,37 @@ const firebaseConfig = {
 
 export const isFirebaseConfigured = Object.values(firebaseConfig).every(Boolean);
 
-export const firebaseApp: FirebaseApp | null = isFirebaseConfigured
-  ? initializeApp(firebaseConfig)
-  : null;
+export type FirebaseInitError = { code: string; message: string; details?: string } | null;
 
-export const auth: Auth | null = firebaseApp ? getAuth(firebaseApp) : null;
-export const db: Firestore | null = firebaseApp ? getFirestore(firebaseApp) : null;
-export const storage: FirebaseStorage | null = firebaseApp
-  ? getStorage(firebaseApp)
-  : null;
+let _firebaseInitError: FirebaseInitError = null;
+let _firebaseApp: FirebaseApp | null = null;
+let _auth: Auth | null = null;
+let _db: Firestore | null = null;
+let _storage: FirebaseStorage | null = null;
+
+if (!isFirebaseConfigured) {
+  _firebaseInitError = {
+    code: "NO_DB_CONFIG",
+    message: "Missing Firebase configuration. Set required VITE_FIREBASE_* environment variables.",
+  };
+  console.error("Firebase init error:", _firebaseInitError);
+} else {
+  try {
+    _firebaseApp = initializeApp(firebaseConfig);
+    _auth = getAuth(_firebaseApp);
+    _db = getFirestore(_firebaseApp);
+    _storage = getStorage(_firebaseApp);
+  } catch (err) {
+    _firebaseInitError = {
+      code: "INIT_ERROR",
+      message: err instanceof Error ? err.message : String(err),
+    };
+    console.error("Firebase initialization failed:", err);
+  }
+}
+
+export const firebaseInitError = _firebaseInitError;
+export const firebaseApp: FirebaseApp | null = _firebaseApp;
+export const auth: Auth | null = _auth;
+export const db: Firestore | null = _db;
+export const storage: FirebaseStorage | null = _storage;

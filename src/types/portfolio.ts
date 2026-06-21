@@ -39,6 +39,7 @@ export interface Project extends PortfolioItemBase {
   githubUrl: string;
   tags: string[];
   featured: boolean;
+  blogSlug?: string;
 }
 
 export interface Education extends PortfolioItemBase {
@@ -48,6 +49,7 @@ export interface Education extends PortfolioItemBase {
   startDate: string;
   endDate: string;
   location: string;
+  blogSlug?: string;
 }
 
 export interface Experience extends PortfolioItemBase {
@@ -57,6 +59,7 @@ export interface Experience extends PortfolioItemBase {
   location: string;
   startDate: string;
   endDate: string;
+  blogSlug?: string;
 }
 
 export interface Achievement extends PortfolioItemBase {
@@ -64,6 +67,7 @@ export interface Achievement extends PortfolioItemBase {
   description: string;
   date: string;
   imageUrl?: string;
+  blogSlug?: string;
 }
 
 export interface Tool extends PortfolioItemBase {

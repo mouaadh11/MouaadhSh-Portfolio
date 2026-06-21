@@ -19,7 +19,7 @@ function renderTitleWithOrangeDelimiters(title: string) {
   );
 }
 
-export default function Hero() {
+export default function HeroSection() {
   const navigate = useNavigate();
   const { profile } = useProfile();
   const { items: achievements, isLoading } = usePortfolioCollection("achievements");
@@ -73,13 +73,15 @@ export default function Hero() {
                 />
                 <div className="flex flex-col justify-between items-end h-full z-10">
                   <p className="text-xl sm:text-2xl">{firstAchievement.title}</p>
-                  <Button
-                    variant="outline"
-                    className="bg-transparent hover:text-orange transition-colors duration-200"
-                    onClick={() => navigate("/blog/myBaccalaureateJourneyPost")}
-                  >
-                    <ArrowRight />
-                  </Button>
+                  {firstAchievement.blogSlug ? (
+                    <Button
+                      variant="outline"
+                      className="bg-transparent hover:text-orange transition-colors duration-200"
+                      onClick={() => navigate(`/blog/${firstAchievement.blogSlug}`)}
+                    >
+                      <ArrowRight />
+                    </Button>
+                  ) : null}
                 </div>
               </div>
             )}
@@ -97,13 +99,15 @@ export default function Hero() {
                 />
                 <div className="flex flex-col justify-between items-end h-full z-10">
                   <p className="text-xl sm:text-2xl">{secondAchievement.title}</p>
-                  <Button
-                    variant="outline"
-                    className="bg-transparent text-black hover:text-[#C5FF41] border-black hover:bg-black transition-colors duration-200"
-                    onClick={() => navigate("/blog/myUniversityJourneyPost")}
-                  >
-                    <ArrowRight />
-                  </Button>
+                  {secondAchievement.blogSlug ? (
+                    <Button
+                      variant="outline"
+                      className="bg-transparent text-black hover:text-[#C5FF41] border-black hover:bg-black transition-colors duration-200"
+                      onClick={() => navigate(`/blog/${secondAchievement.blogSlug}`)}
+                    >
+                      <ArrowRight />
+                    </Button>
+                  ) : null}
                 </div>
               </div>
             )}

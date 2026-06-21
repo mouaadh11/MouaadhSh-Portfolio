@@ -4,18 +4,20 @@ import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "./components/navbar";
 import Footer from "./components/footer";
-import Section6 from "./components/sections/section6";
-import Section4 from "./components/sections/section4";
-import Section2 from "./components/sections/myWork";
-import EducationSection from "./components/sections/education";
-import { Right } from "./components/right-side";
-import { Left } from "./components/left-side";
+import ContactSection from "./components/sections/ContactSection";
+import ToolsSection from "./components/sections/ToolsSection";
+import ProjectsSection from "./components/sections/ProjectsSection";
+import EducationSection from "./components/sections/EducationSection";
+import { Right } from "./components/RightSide";
+import { Left } from "./components/LeftSide";
 import BlogPage from "./components/sections/blog";
 import { NotFound } from "./components/notFound";
 import { AuthProvider } from "./contexts/AuthContext";
 import AdminLogin from "./components/admin/AdminLogin";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
+import ErrorPage from "./components/ui/ErrorPage";
+import { firebaseInitError } from "@/lib/firebase";
 
 function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -49,6 +51,27 @@ function ScrollToTop() {
 }
 
 function App() {
+  if (firebaseInitError) {
+    return (
+      <>
+        <Toaster />
+        <AuthProvider>
+          <Router>
+            <ScrollToTop />
+            <div className="flex min-h-screen flex-col items-center bg-black pt-24 text-white sm:pt-28 lg:pt-40">
+              <Navbar />
+              <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 sm:px-6 lg:flex-row lg:gap-14 xl:gap-20">
+                <ErrorPage code={firebaseInitError.code} message={firebaseInitError.message} onRetry={() => window.location.reload()} />
+              </div>
+              <Footer />
+            </div>
+          </Router>
+        </AuthProvider>
+        <Analytics />
+      </>
+    );
+  }
+
   return (
     <>
       <Toaster />
@@ -72,7 +95,7 @@ function App() {
                 <PublicChrome>
                   <PageShell>
                     <EducationSection />
-                    <Section6 />
+                    <ContactSection />
                   </PageShell>
                 </PublicChrome>
               }
@@ -82,8 +105,8 @@ function App() {
               element={
                 <PublicChrome>
                   <PageShell>
-                    <Section2 />
-                    <Section6 />
+                    <ProjectsSection />
+                    <ContactSection />
                   </PageShell>
                 </PublicChrome>
               }
@@ -93,8 +116,8 @@ function App() {
               element={
                 <PublicChrome>
                   <PageShell>
-                    <Section4 />
-                    <Section6 />
+                    <ToolsSection />
+                    <ContactSection />
                   </PageShell>
                 </PublicChrome>
               }
@@ -104,7 +127,7 @@ function App() {
               element={
                 <PublicChrome>
                   <PageShell>
-                    <Section6 />
+                    <ContactSection />
                   </PageShell>
                 </PublicChrome>
               }
@@ -115,7 +138,7 @@ function App() {
                 <PublicChrome>
                   <PageShell>
                     <BlogPage />
-                    <Section6 />
+                    <ContactSection />
                   </PageShell>
                 </PublicChrome>
               }

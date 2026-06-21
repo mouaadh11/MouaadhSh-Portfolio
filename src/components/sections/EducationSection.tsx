@@ -25,6 +25,7 @@ export default function EducationSection() {
               title={`${item.title} - ${item.institution}`}
               description={item.description}
               date={[item.startDate, item.endDate].filter(Boolean).join(" - ")}
+              blogSlug={item.blogSlug}
             />
           ))}
         </div>

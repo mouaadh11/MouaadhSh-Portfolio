@@ -1,7 +1,7 @@
 import MyContactForm from "../ui/contact-form";
 import SectionTitle from "../ui/section-title";
 
-export default function Section6() {
+export default function ContactSection() {
   return (
     <div className="flex flex-col gap-10 max-h-fit">
       {/* Title */}

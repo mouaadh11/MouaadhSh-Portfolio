@@ -2,8 +2,10 @@ import { usePortfolioCollection } from "@/hooks/usePortfolioCollection";
 import ElementCard from "../ui/element-card";
 import SectionTitle from "../ui/section-title";
 
-export default function Section3() {
+export default function ExperienceSection() {
   const { items, isLoading } = usePortfolioCollection("experience");
+
+  // Use the experience item's blogSlug when available
 
   return (
     <div className="flex flex-col gap-5">
@@ -25,6 +27,7 @@ export default function Section3() {
               title={item.title}
               description={`${item.description}${item.company ? ` - ${item.company}` : ""}`}
               date={[item.startDate, item.endDate].filter(Boolean).join(" - ")}
+              blogSlug={item.blogSlug}
             />
           ))}
         </div>
